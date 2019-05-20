@@ -13,6 +13,9 @@ public class Main implements WebApplicationInitializer {
 
     public void onStartup(ServletContext servletContext) throws ServletException {
 
+        //Set application to use slf4j logging framework
+        //System.setProperty("org.jboss.logging.provider", "slf4j");
+
         //Create root application context
         AnnotationConfigWebApplicationContext root_ctx = new AnnotationConfigWebApplicationContext();
 
