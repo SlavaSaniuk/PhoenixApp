@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping(value = {"/login", "/login.html"})
 public class LoginController {
@@ -14,7 +16,7 @@ public class LoginController {
     private static Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @GetMapping
-    public String getLoginPage() {
+    public String getLoginPage(HttpServletResponse response) {
 
         //Return
         return "login";

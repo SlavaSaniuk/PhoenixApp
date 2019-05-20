@@ -1,17 +1,20 @@
 package by.bsac.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+
+import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "by.bsac.controllers") //Packet where live all application controllers
+@ComponentScan(basePackages = {"by.bsac.controllers"}) //Packet where live all application controllers
 @Import(value = {by.bsac.configuration.ThymeleafFrameworkConfigurer.class})
 public class WebApplicationContextConfigurer implements WebMvcConfigurer {
 
@@ -42,4 +45,58 @@ public class WebApplicationContextConfigurer implements WebMvcConfigurer {
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+
+    /**
+     * Add Spring MVC lifecycle interceptors for pre- and post-processing of
+     * controller method invocations. Interceptors can be registered to apply
+     * to all requests or be limited to a subset of URL patterns.
+     * <p><strong>Note</strong> that interceptors registered here only apply to
+     * controllers and not to resource handler requests. To intercept requests for
+     * static resources either declare a
+     * {@link org.springframework.web.servlet.handler.MappedInterceptor MappedInterceptor}
+     * bean or switch to advanced configuration mode by extending
+     * {@link org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
+     * WebMvcConfigurationSupport} and then override {@code resourceHandlerMapping}.
+     */
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(this.localeChangeInterceptor());
+    }
+
+    /*
+        Localization section
+     */
+
+    /**
+     * Implementation of locale resolver interface.
+     * LocaleResolver use "Accept-Languages" request header to resolve locale.
+     * @return - Configured {@link org.springframework.web.servlet.LocaleResolver} object.
+     */
+    @Bean(name = "localeResolver")
+    public LocaleResolver localeResolver() {
+        //Create request locale resolver
+        AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
+        //Default locale - USA
+        resolver.setDefaultLocale(Locale.US);
+        //Return
+        return resolver;
+    }
+
+    /**
+     * LocaleChangeInterceptor change user locale based on "primary-language" request header.
+     * If you want to change user locale then set "primary-language" header to HttpServletRequest and specify desired value.
+     * @return - Configured {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} object.
+     */
+    @Bean(name = "localeChangeInterceptor")
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        //Create object
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+
+        //Set trigger
+        lci.setParamName("primary-language");
+
+        //Return
+        return lci;
+    }
+
+
 }

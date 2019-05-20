@@ -3,8 +3,10 @@ package by.bsac.configuration;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -39,7 +41,7 @@ public class ThymeleafFrameworkConfigurer implements ApplicationContextAware {
         //HTML mode
         resolver.setTemplateMode(TemplateMode.HTML);
         //Order
-        resolver.setOrder(2);
+        resolver.setOrder(1);
 
         //Return
         return resolver;
@@ -61,6 +63,7 @@ public class ThymeleafFrameworkConfigurer implements ApplicationContextAware {
         engine.addTemplateResolver(this.templateResolver());
 
         //Add message sources
+        engine.setMessageSource(this.messageSource());
 
         //Return
         return engine;
@@ -79,8 +82,30 @@ public class ThymeleafFrameworkConfigurer implements ApplicationContextAware {
         //Set Spring template engine
         resolver.setTemplateEngine(this.templateEngine());
 
+        resolver.setCharacterEncoding("UTF-8");
+
         //Return
         return resolver;
+    }
+
+    /**
+     * Reloadable Spring message source. Need to specify it in template engine @see ThymeleafFrameworkConfigurer#templateEngine
+     * @return - Configured {@link org.springframework.context.MessageSource} object.
+     */
+    @Bean(name = "messageSource")
+    public MessageSource messageSource() {
+        //Create object
+        ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
+
+        //Path to resource bundle
+        ms.setBasename("static/lang/message");
+        //Cache timeout
+        ms.setCacheSeconds(10);
+        //Default encoding
+        ms.setDefaultEncoding("UTF-8");
+
+        //Return
+        return ms;
     }
 
     //Spring autowiring
