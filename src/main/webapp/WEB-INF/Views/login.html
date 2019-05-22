@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="java">
 <head>
     <meta  th:charset="utf-8">
     <title data-th-text="#{page.login.title}">   </title>
+    <!-- Import css styles-->
+    <link rel="stylesheet" type="text/css" data-th-href="@{/styles/styles.css}">
+    <link rel="stylesheet" type="text/css" data-th-href="@{/styles/login.css}">
 </head>
 <body>
 
-    <h3 data-th-text="#{page.login.welcome}"> </h3>
+    <div class="overlay">
+        <div class="login-block">
+            <p class="login-block-welcome" data-th-text="#{page.login.welcome}"> Please, sign in </p>
+            <form class="login-block-form" method="post" data-th-action="@{/login}" data-th-object="${login_form}">
+                <input type="text" name="user_email" data-th-placeholder="#{page.login.user.email}" class="login-form-input"
+                    data-th-value="*{user_email}" />
+                <input type="password" name="user_password" data-th-placeholder="#{page.login.user.password}" class="login-form-input"
+                       data-th-value="*{user_password}"/>
+                <input type="submit" name="login-submit" data-th-value="#{page.login.submit.value}" class="login-form-input login-form-submit" onclick="return false;" />
+            </form>
+            <p class="login-block-registration"> <span data-th-utext="#{page.login.registration.msg}"> Don't have an account?  </span> <br>
+                <a href="#" data-th-href="@{/registration}"> <span class="login-block-registration-a" data-th-text="#{page.login.registration.a}"> Sing Up </span>
+                </a> </p>
+        </div>
+    </div>
 
 </body>
 </html>

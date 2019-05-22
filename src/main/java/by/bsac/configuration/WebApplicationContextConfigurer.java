@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
@@ -62,6 +62,24 @@ public class WebApplicationContextConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(this.localeChangeInterceptor());
     }
 
+    /**
+     * Mapping static resources such as styles, images to classpath resources.
+     * When client want to load static resource his sent request, then Dispatcher servlet detect path to resource and load correct file.
+     * @param registry - Static resources registry.
+     */
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        //Add CSS folder
+        registry.addResourceHandler("/styles/**").addResourceLocations("classpath:/static/styles/");
+        //Add JavaScript libs folder
+        registry.addResourceHandler("/libs/**").addResourceLocations("classpath:/static/libs/");
+        //Add images folder
+        registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
+        //Add fonts folder
+        registry.addResourceHandler("/fonts/").addResourceLocations("classpath:/static/fonts/");
+
+    }
+
     /*
         Localization section
      */
@@ -74,7 +92,7 @@ public class WebApplicationContextConfigurer implements WebMvcConfigurer {
     @Bean(name = "localeResolver")
     public LocaleResolver localeResolver() {
         //Create request locale resolver
-        AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
         //Default locale - USA
         resolver.setDefaultLocale(Locale.US);
         //Return

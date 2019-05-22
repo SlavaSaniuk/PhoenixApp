@@ -1,0 +1,91 @@
+@import url("fonts.css") fonts;
+
+.login-block {
+
+	width: 450px;
+	height: 550px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+
+	box-shadow: 0px 0px 20px 0px #000;
+}
+
+.login-block-welcome {
+
+	font-family: intro;
+	color: #45d34f;
+	font-size: 32px;
+	text-align: center;
+
+	flex-grow: 1;
+
+	padding-top: 40px;
+}
+
+.login-block-form {
+	display: inherit;
+	flex-direction: inherit;
+	justify-content: space-around;
+	align-items: center;
+
+	height: 60%;
+}
+
+.login-form-input {
+	width: 300px;
+	height: 75px;
+
+	font-family: comforta-lite;
+	color: #919191;
+	text-align: center;
+	font-size: 20px;
+
+	border: 3px solid #3F7E3F;
+	box-shadow: 0px 0px 14px -8px #000;
+}
+
+.login-form-input:focus {
+	transform: scale(1.1, 1.1);
+}
+
+.login-form-submit {
+	background-color: #3F7E3F;
+	border: none;
+
+	font-family: intro;
+	color: #45d34f;
+	font-size: 32px;
+
+	transform: none;
+}
+
+.login-form-submit:active {
+	background-color: #2B552B;
+	border: 2px solid #3F7E3F;
+}
+
+.login-form-submit:focus {
+	transform: none;
+}
+
+
+
+.login-block-registration {
+
+	font-family: comforta-lite;
+	color: #919191;
+	text-align: center;
+	font-size: 17px;
+}
+
+.login-block-registration-a {
+	color: #45d34f;
+}

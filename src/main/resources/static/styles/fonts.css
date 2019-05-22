@@ -1,0 +1,11 @@
+@font-face {
+	font-family: intro;
+	scr: url(../fonts/intro.woff2);
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: comforta-lite;
+	scr: url(../fonts/comforta-lite.woff2);
+	font-weight: light;
+}
