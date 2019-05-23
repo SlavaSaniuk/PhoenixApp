@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 
 @Configuration(value = "html-forms")
-public class HtmlFormsConfigurer {
+public class HtmlFormsBeans {
 
     /**
      * Bean indicate object representation of login form.

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/">
 
+    <Resource
+            name="jdbc/Phoenix-users"
+            auth="container"
+            type="javax.sql.DataSource"
+            username="WebAdmin"
+            password="admin123"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://localhost:36548/phoenix_users"
 
+            defaultAutoCommit="true"
+            defaultReadOnly="false"
+
+            initialSize="3"
+            maxTotal="10"
+            maxIdle="5"
+
+            poolPreparedStatements="true"
+
+    />
 
 </Context>

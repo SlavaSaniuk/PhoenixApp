@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.sql.DataSource;
+
 @Controller
 @RequestMapping(value = {"/login", "/login.html"})
 public class LoginController {
@@ -45,7 +47,7 @@ public class LoginController {
 
     //Spring autowiring
     @Autowired
-    public void autowire(LoginForm a_login_form) {
+    public void autowire(LoginForm a_login_form, DataSource ds) {
         this.login_form = a_login_form;
     }
 

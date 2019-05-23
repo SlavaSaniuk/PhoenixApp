@@ -9,12 +9,15 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+
 public class Main implements WebApplicationInitializer {
 
+    /**
+     * Phoenix web application startup method.
+     * @param servletContext - Servlet context.
+     * @throws ServletException - If servlet context is null.
+     */
     public void onStartup(ServletContext servletContext) throws ServletException {
-
-        //Set application to use slf4j logging framework
-        //System.setProperty("org.jboss.logging.provider", "slf4j");
 
         //Create root application context
         AnnotationConfigWebApplicationContext root_ctx = new AnnotationConfigWebApplicationContext();
@@ -25,6 +28,8 @@ public class Main implements WebApplicationInitializer {
         //Register root context with context loader listener
         //and associate hiw with servlet context
         servletContext.addListener(new ContextLoaderListener(root_ctx));
+
+        root_ctx.getEnvironment().setActiveProfiles("Production");
 
         //Create web application context
         AnnotationConfigWebApplicationContext web_ctx = new AnnotationConfigWebApplicationContext();
@@ -43,6 +48,6 @@ public class Main implements WebApplicationInitializer {
         dispatcher_servlet.addMapping("/");
         dispatcher_servlet.setLoadOnStartup(1);
 
-
     }
+
 }
