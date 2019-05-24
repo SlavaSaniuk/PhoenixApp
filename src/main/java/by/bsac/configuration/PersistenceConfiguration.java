@@ -3,10 +3,7 @@ package by.bsac.configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Description;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -18,6 +15,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.Resource;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -31,14 +29,22 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "by.bsac.data")
+@PropertySource("classpath:application.properties")
 public class PersistenceConfiguration {
 
-    //Datasource
-    private DataSource ds;
+    @Resource
+    private DataSource ds; //Inject configured datasource
     //Logger
     private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceConfiguration.class);
     //Spring beans
     private Environment spring_environment;
+
+    //Constructor
+    @Autowired
+    public PersistenceConfiguration(Environment a_env) {
+        //Mapping
+        this.spring_environment = a_env;
+    }
 
     /**
      * Production datasource for "phoenix_users" database.
@@ -107,14 +113,17 @@ public class PersistenceConfiguration {
         //Create entity manager factory
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 
+        //Set persistence unit scan
+        emf.setPackagesToScan("by.bsac.models.user");
+
         //Set datasource
         emf.setDataSource(this.ds);
 
         //Create Hibernate vendor adapter
         final JpaVendorAdapter vendor_adapter = new HibernateJpaVendorAdapter();
-
         //Set it to emf
         emf.setJpaVendorAdapter(vendor_adapter);
+
         //Set Hibernate properties
         emf.setJpaProperties(this.getHibernateProperties());
 
@@ -159,13 +168,5 @@ public class PersistenceConfiguration {
         //Return configured transaction manager
         return tm;
     }
-
-    //Spring autowiring
-    @Autowired
-    public void autowire(Environment a_environment){
-        //Mapping
-        this.spring_environment = a_environment;
-    }
-
 
 }
