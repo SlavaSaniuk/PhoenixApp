@@ -1,4 +1,4 @@
-package by.bsac.models.htmlForms;
+package by.bsac.models.html_forms;
 
 import org.springframework.stereotype.Component;
 

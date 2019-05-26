@@ -1,6 +1,6 @@
 package by.bsac.controllers;
 
-import by.bsac.models.htmlForms.LoginForm;
+import by.bsac.models.html_forms.LoginForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

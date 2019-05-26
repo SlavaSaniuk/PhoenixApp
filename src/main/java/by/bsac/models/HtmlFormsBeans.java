@@ -1,6 +1,6 @@
 package by.bsac.models;
 
-import by.bsac.models.htmlForms.LoginForm;
+import by.bsac.models.html_forms.LoginForm;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
@@ -11,7 +11,7 @@ public class HtmlFormsBeans {
     /**
      * Bean indicate object representation of login form.
      * Used for mapping between html form inputs and objects representation of it.
-     * @return - {@link by.bsac.models.htmlForms.LoginForm} object.
+     * @return - {@link by.bsac.models.html_forms.LoginForm} object.
      */
     @Bean(name = "login_form")
     @Description("Bean indicate object representation of login form.")
