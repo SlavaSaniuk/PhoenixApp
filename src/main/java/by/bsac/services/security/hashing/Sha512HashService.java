@@ -13,7 +13,6 @@ public class Sha512HashService extends AbstractHashingService {
     //Logger
     private static final Logger LOGGER = LoggerFactory.getLogger(by.bsac.services.security.hashing.Sha512HashService.class);
 
-
     //Constructor
     public Sha512HashService() {
 
@@ -30,7 +29,14 @@ public class Sha512HashService extends AbstractHashingService {
         super.hash_length = 64;
     }
 
-    public byte[] hash() {
+    @Override
+    public byte[] hash(String hashed_word) {
 
+        //String to byte array
+        byte[] hashed_bytes = hashed_word.getBytes();
+
+        //hash bytes
+        return super.digest.digest(hashed_bytes);
     }
+
 }

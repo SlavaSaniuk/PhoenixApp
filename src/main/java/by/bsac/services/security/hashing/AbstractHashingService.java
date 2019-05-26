@@ -14,7 +14,7 @@ public abstract class AbstractHashingService implements HashingService {
     protected String hashing_algorythm;
     protected int hash_length;
 
-    public abstract byte[] hash();
+    public abstract byte[] hash(String hashed_word);
 
     public byte[] generateSalt() {
 

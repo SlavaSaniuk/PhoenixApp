@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(value = {HtmlFormsBeans.class,
-                                by.bsac.configuration.PersistenceConfiguration.class})
+        by.bsac.configuration.PersistenceConfiguration.class,
+        by.bsac.services.ServicesConfiguration.class})
 public class RootContextConfigurer {
 
 

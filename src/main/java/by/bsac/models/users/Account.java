@@ -1,5 +1,10 @@
 package by.bsac.models.users;
 
+import by.bsac.services.security.hashing.HashServicesFactory;
+import by.bsac.services.security.hashing.HashingService;
+import by.bsac.services.security.hashing.Sha512HashService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -21,6 +26,9 @@ public class Account implements Serializable {
     private transient String password;
     private String password_hash;
     private String password_salt;
+
+    private transient HashingService hash_service = new Sha512HashService();
+
 
 
 
